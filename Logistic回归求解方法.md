@@ -1,5 +1,5 @@
-
-# Python中优化方法
+[toc]
+# 1. Python中优化方法
 
 statsmodels.discrete.discrete_model.Logit.fit(*start_params=None*, *method='newton'*, *maxiter=35*, *full_output=1*, *disp=1*, *callback=None*, ***kwargs*)
 
@@ -38,7 +38,7 @@ New in version 0.19: SAGA solver.
 
 
 
-# 优化方法
+# 2. 优化方法
 
 符号说明：
 
@@ -112,7 +112,7 @@ New in version 0.19: SAGA solver.
 
 
 
-## 坐标轴下降法 求解Lasso回归
+## 2.1. 坐标轴下降法 求解Lasso回归
 coordinate descent：一个可微的凸函数$J(\theta)$，其中$\theta$是$n\times 1$的向量，即有$n$个维度。若在某一点$\bar{\theta}_i(i=1,2,\dots,n)$上都是最小值，则$J(\bar{\theta}_i)$就是一个全局的最小值。
 
 1. 初始化$\theta^{(0)}$
@@ -120,7 +120,7 @@ coordinate descent：一个可微的凸函数$J(\theta)$，其中$\theta$是$n\t
 3. 迭代至在所有维度上变化都比较小
 
 
-## 最小角回归法 求解Lasso回归
+## 2.2. 最小角回归法 求解Lasso回归
 
 
 
@@ -136,12 +136,10 @@ coordinate descent：一个可微的凸函数$J(\theta)$，其中$\theta$是$n\t
 
 
 
-# Logistic回归
+# 3. Logistic回归
 
-## 1. 指数族分布角度的Logistic回归
-
-### (1)指数族分布
-
+## 3.1. 指数族分布角度的Logistic回归
+### 3.1.1. 指数族分布
 指数族分布$f(y;\theta,\phi)=exp\{\frac{y\theta-b(\theta)}{a(\phi)}+c(y,\phi)\}$，其中$\theta$为自然参数，$\phi$为散度参数，$a,b,c$为函数，且满足以下条件：
 
 - $a(\phi)>0$，连续，通常为$\phi/w$，其中$w$为已知先验权重
@@ -174,10 +172,7 @@ $$
 
 Logistic的LinkFunction为$g(\mu)=ln\frac{\mu}{1-\mu} \quad 0<\mu<1$，$g(\mu_i)=\sum_{j=1}^{p}{X_{ij}\beta_j},\quad i=1,\dots,n$
 
-
-
-### (2)Logistic回归
-
+### 3.1.2. Logistic回归
 设$X_1,\dots,X_p$的$n$组值$X_i=(X_{i1},\dots,X_{ip})^T, i=1,\dots,n$ 在每个$X_i$处，对二值随机变量$\xi_{i}$进行$m_i$次观测，其中$\xi_i=1$表示发生事件A，$\xi_i=0$表示未发生事件A.
 
 设$\xi_i=1$有$k_i$次，令$Y_i$表示$\{\xi_i=1\}$出现的频率，则$Y_i=\frac{k_i}{m_i},i=1,\dots,n$, $k_i=0,1,2,...,m_i$.
@@ -199,15 +194,14 @@ $$
 \end{align}
 $$
 
-### (3)求解方法
-
+### 3.1.3. 求解方法
 $$
 \sum_{i=1}^{n}{\frac{(Y_i-\mu_i)X_{ir}}{a(\phi_i)V(\mu_i)g^{’}(\mu_i)}=0, \quad \mu_i=g^{-1}(\sum_{j=1}^{p}{X_{ij}\beta_j}),\quad r=1,\dots,p}
 $$
 
 需通过迭代法来求解$\beta$
 
-#### IRWLS
+#### 3.1.3.1. IRWLS
 
 设$Y_i \sim N(\mu_i,\sigma_i^2),\sigma_i^2=\sigma^2a_i且a_1\dots a_n$已知，$Y_i$与$X_1,\dots,X_p$服从线性模型，则
 $$
@@ -257,7 +251,7 @@ IRWLS迭代步骤：
 
 
 
-#### Newton-Raphson迭代法与Fisher得分法
+#### 3.1.3.2. Newton-Raphson迭代法与Fisher得分法
 
 对数似然函数$f(\beta)=lnL(\beta_1,\dots,\beta_p)=\sum_{i=1}^{n}{[\frac{Y_i\theta_i-b(\theta_i)}{a(\phi_i)}+c(Y_i,\phi_i)]}$
 
@@ -346,7 +340,7 @@ $$
 
 
 
-## 2. 直接定义Logistic模型
+## 3.2. 直接定义Logistic模型
 
 
 $$
@@ -368,10 +362,10 @@ $$
 \end{align}
 $$
 
+# 4. Logistic与最大熵模型
 
 
-
-# 参考资料
+# 5. 参考资料
 
 [1] https://liushulun.cn/post/machinelearning/ml-logistic/data-ml-logistic-optimization/ml-logistic-optimization/
 
@@ -382,4 +376,6 @@ $$
 [4] https://www.cnblogs.com/pinard/p/6018889.html（坐标轴下降法与最小角回归法）
 
 [5] https://www.cs.cmu.edu/~ggordon/10725-F12/slides/（PPT优化方法）
+
+[6] 李航 (2019) 统计学习方法（第2版）. 清华大学出版社, 北京.
 
